@@ -143,7 +143,7 @@ function App() {
                         className="add-container-btn"
                         onClick={toggleAddContainerForm}
                     >
-                        Add another container
+                        Ajouter un autre colonne
                     </button>
                     {showAddContainerForm && (
                         <AddNewContainer onAdd={handleAddContainer} />
