@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
-function AddNewContainer({ onAdd }) {
+interface AddNewContainerProps {
+	onAdd: (title: string) => void;
+}
+
+function AddNewContainer({ onAdd }: AddNewContainerProps) {
 	const [newContainerTitle, setNewContainerTitle] = useState("");
 	const [validationMsg, setValidationMsg] = useState("");
 	const [showAddContainerForm, setShowAddContainerForm] = useState(false);
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!newContainerTitle) {
 			setValidationMsg("Le titre du conteneur doit être renseigné.");
@@ -13,11 +17,13 @@ function AddNewContainer({ onAdd }) {
 			onAdd(newContainerTitle);
 			setNewContainerTitle("");
 			setValidationMsg("");
+			setShowAddContainerForm(false);
 		}
 	};
 
 	const toggleAddContainerForm = () => {
 		setShowAddContainerForm(!showAddContainerForm);
+		setValidationMsg("");
 	};
 
 	return (
@@ -27,7 +33,7 @@ function AddNewContainer({ onAdd }) {
 			autoComplete="off"
 		>
 			<div className="top-form-container">
-				<label htmlFor="new-container">Add a new container</label>
+				<label htmlFor="new-container">Ajouter un nouveau container</label>
 				{/* Bouton pour fermer le formulaire si nécessaire */}
 				<button
 					onClick={toggleAddContainerForm}
@@ -42,7 +48,7 @@ function AddNewContainer({ onAdd }) {
 				id="new-container"
 				value={newContainerTitle}
 				onChange={e => setNewContainerTitle(e.target.value)}
-				placeholder="New container title"
+				placeholder="Nouveau titre container"
 			/>
 			{validationMsg && <span className="validation-msg">{validationMsg}</span>}
 			<button type="submit">Submit</button>
